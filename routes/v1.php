@@ -13,5 +13,9 @@
 
 
 Route::group([], function () {
-    Route::get('/', "IndexController@Index");
+    //Route::post('user/login','LoginController@Login');
+    // Route::post('login', 'AuthController@login');
+    // Route::post('logout', 'AuthController@logout');
+    // Route::post('refresh', 'AuthController@refresh');
+    // Route::post('me', 'AuthController@me');
 });
