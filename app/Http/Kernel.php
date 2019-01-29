@@ -26,6 +26,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
@@ -50,6 +51,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
@@ -57,5 +59,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'jwt.auth' =>\App\Http\Middleware\User\authJWT::class,
+        'cors' => \App\Http\Middleware\CORS::class,
     ];
+
 }
