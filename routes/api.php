@@ -13,13 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::group([
 
+    'prefix' => 'auth'
 
-// Route::get('captcha', 'Auth\LoginController@captcha');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('register', 'Auth\RegisterController@register');
-//校验token是否正确
-//Route::get('/jwt/auth', 'Auth\JWTController@authenticate');
+], function ($router) {
+    Route::post('me', 'Auth\AuthController@me')->name('me');
+    Route::post('login', 'Auth\AuthController@login')->name('login');
+    Route::post('logout', 'Auth\AuthController@logout')->name('logout');
+    Route::post('refresh', 'Auth\AuthController@refresh')->name('refresh');
+    
+
+});
