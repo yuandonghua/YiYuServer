@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\LoginModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -48,9 +49,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            // 'name' => 'required|string|max:255',
+            // 'email' => 'required|string|email|max:255|unique:users',
+            // 'password' => 'required|string|min:6|confirmed',
         ]);
     }
 
@@ -62,10 +63,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+        return LoginModel::create([
+            'user_id' => 1,
+            'type' => $data['type'],
+            'account' => $data['account'],
+            'password' => bcrypt($data['account']),
         ]);
+    }
+
+
+    public function register(array $data)
+    {
+        return $this->create($data);
+    }
+
+    public function checkUserExists($account, $type)
+    {
+        return LoginModel::whereAccount($account)->whereType($type)->value('user_id');
     }
 }
