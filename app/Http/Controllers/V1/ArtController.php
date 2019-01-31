@@ -4,13 +4,17 @@ namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use App\Services\ArtService;
+use App\Http\Requests\StoreArtRequest;
+
+
 
 class ArtController extends Controller
 {
     public function __construct(ArtService $artService)
     {
-        // $this->middleware('jwt.auth', ['except' => ['index']]);
+        $this->middleware('jwt.auth', ['except' => ['index']]);
         $this->artService = $artService;
     }
 
@@ -21,7 +25,7 @@ class ArtController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         //
 
@@ -88,7 +92,7 @@ class ArtController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArtRequest $request)
     {
         // dd('art.store');
 
