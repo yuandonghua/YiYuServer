@@ -61,6 +61,8 @@ class LoginModel extends Authenticatable implements JWTSubject
         return $query->where('type', $type);
     }
 
+    
+
 }
 
 

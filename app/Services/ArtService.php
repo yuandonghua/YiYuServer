@@ -7,8 +7,8 @@ use App\Models\ArtModel;
 
 class ArtService
 {
-    public function create()
+    public function create($data)
     {
-        
+        return ArtModel::insert($data);
     }
 }

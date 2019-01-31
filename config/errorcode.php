@@ -33,5 +33,9 @@ return [
          */
         4001 => 'The account number or password is incorrect', // 登录帐号或密码错误
         4002 => 'The account number has been cancelled', // 登录帐号已经被注销
+
+
+
+        4011 => 'The code is between 200 and 300', // 登录帐号已经被注销
     ],
 ];
