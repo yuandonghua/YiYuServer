@@ -13,15 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group([
 
-    'prefix' => 'auth'
-
-], function ($router) {
+/*
+ * 有关token操作（指定到App\Http\Controllers\Auth）
+ */
+Route::group([], function () {
     Route::post('me', 'Auth\AuthController@me')->name('me');
     Route::post('login', 'Auth\AuthController@login')->name('login');
     Route::post('logout', 'Auth\AuthController@logout')->name('logout');
     Route::post('refresh', 'Auth\AuthController@refresh')->name('refresh');
-    
-
 });
+
+
