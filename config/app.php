@@ -176,6 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Freyo\Flysystem\QcloudCOSv5\ServiceProvider::class, // 腾讯云COS存储对象
     ],
 
     /*

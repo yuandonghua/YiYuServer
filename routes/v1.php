@@ -15,7 +15,7 @@
 
 // 不需要token认证的路由
 Route::group([], function () {
-    Route::get('index', 'IndexController@Index');
+    //Route::get('index', 'IndexController@Index');
     Route::resource('art', 'ArtController');
 
 });
@@ -23,7 +23,7 @@ Route::group([], function () {
 
 // 需要token认证的路由
 Route::group(['middleware' => ['jwt.auth']], function () {
-    Route::get('index', 'IndexController@Index');
+    //Route::get('index', 'IndexController@Index');
     
-
+    Route::post('storage/imageUpload', 'StorageController@imageUpload');
 });

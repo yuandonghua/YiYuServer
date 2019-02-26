@@ -15,15 +15,10 @@ return [
     */
 
     'code' => [
-        200 => 'SUCCESS', //（成功）服务器已成功处理了请求
-        201 => 'CREATED', //（已创建）请求成功并且服务器创建了新的资源。 
-        202 => 'ACCEPTED', // （已接受）  服务器已接受请求，但尚未处理。 
-        203 => 'ANOTHER SOURCE', // （返回非授权信息）  服务器已成功处理了请求，但返回的信息可能来自另一来源。 
+        200 => 'SUCCESS', //（成功）服务器已成功处理了请求 
         304 => 'NOTMODIFIED', // （未修改） 
         400 => 'BADREQUEST', // （错误请求） 服务器不理解请求的语法。 
         401 => 'UNAUTHORIZED', // （未授权） 请求要求身份验证。 对于需要登录的网页，服务器可能返回此响应。
-        403 => 'FORBIDDEN', // （禁止） 服务器拒绝请求
-        404 => 'NOTFOUND', // （未找到） 服务器找不到请求的网页
         408 => 'CURL TIMEOUT',  //（请求超时) CURL 请求第三方超时
         500 => 'INTERNALSERVERERROR', // （服务器内部错误）  服务器遇到错误，无法完成请求
 
@@ -36,6 +31,9 @@ return [
 
 
 
-        4011 => 'The code is between 200 and 300', // 登录帐号已经被注销
+        4011 => 'The code is between 200 and 300', // 
+        // 上传范围 4020-4029
+        4021 => 'Upload image is empty',
+        4022 => 'Upload image is fail',
     ],
 ];
