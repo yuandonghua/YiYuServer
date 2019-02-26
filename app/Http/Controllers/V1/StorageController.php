@@ -9,7 +9,7 @@ class StorageController extends Controller
 {
 
     /**
-     * @api {POST} /Storage/imageUpload 文件【图片上传】
+     * @api {POST} /storage/imageUpload 文件【图片上传】
      * @apiGroup Storage
      * @apiversion 0.1.0
      * @apiDescription
@@ -32,6 +32,7 @@ class StorageController extends Controller
      * @apiSuccess (返回字段:) {Integer} code 状态码
      * @apiSuccess (返回字段:) {String} message  提示信息
      * @apiSuccess (返回字段:) {Object} data  statusCode为200时返回的数据包
+     * @apiSuccess (返回字段:) {String} path  上传后返回的访问地址
      *
      * @apiSuccessExample 成功时返回的数据:
      *  HTTP/1.1 200 Success
