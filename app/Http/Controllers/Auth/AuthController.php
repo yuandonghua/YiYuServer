@@ -31,54 +31,49 @@ class AuthController extends Controller
 
 
     /**
-     * @api {POST} /v1/business 业务【获取业务列表】
+     * @api {POST} /api/login 用户【登录/注册】
      * @apiGroup Auth
      * @apiversion 0.1.0
      * @apiDescription
      * --------------------------------------
      * Author:zhangjinyu
      *
-     * Date:2019/01/31 19:09
+     * Date:2019/02/26 19:09
      *
      * Email:363626256@qq.com
      * --------------------------------------
      *
-     * @apiParam (请求参数:) {Integer} big_customer 0:所有;1:大客户队列;2:非大客户队列
-     * @apiParam (请求参数:) {Integer} queue_type   1:文本通路;2:电话通路
+     * @apiParam (请求参数:) {String} account OpenID
+     * @apiParam (请求参数:) {Integer} type   2:QQ;3:微信
      *
      * @apiHeaderExample {x-www-form-urlncode} Header-Example: 请求头部示例：
      * Content-Type: application/json
      * charset=utf-8
      * Authorization: Bearer anEisUMtAbGEbKvlxmNNPliECaph6r7FMAZQpVbv
      *
-     * @apiSuccess (返回字段:) {Integer} statusCode 状态码
-     * @apiSuccess (返回字段:) {String} message  提示信息
-     * @apiSuccess (返回字段:) {Object} data  statusCode为200时返回的数据包
-     * @apiSuccess (返回字段:) {Integer} id  业务id
-     * @apiSuccess (返回字段:) {String} name  业务名称
+     * @apiSuccess (返回字段:) {String} status 状态
+     * @apiSuccess (返回字段:) {Integer} code  状态码
+     * @apiSuccess (返回字段:) {Object} data  code为200时返回的数据包
+     * @apiSuccess (返回字段:) {Integer} user_id  用户id
+     * @apiSuccess (返回字段:) {Integer} status  0：注销；1：正常
      *
      * @apiSuccessExample 成功时返回的数据:
      *  HTTP/1.1 200 Success
      *{
-     *  "statusCode": 200,
-     *  "message": {
-     *      "info": "Success"
-     *   },
+     *  "status": true,
+     *  "code": 200,
+     *  "message": "SUCCESS",
      *  "data": {
-     *    "list": [
-     *      {
-     *        "id": 2,
-     *        "name": "CES",
-     *        "created_at": "2018-07-09 11:46:20",
-     *        "updated_at": "2018-07-10 14:40:32"
-     *      }
-     *    ],
-     *    "count": 1
+     *      "id": 14,
+     *      "user_id": 1,
+     *      "account": "zhangjinyu666661",
+     *      "type": 1,
+     *      "status": 1
      *  }
      *}
      **/
     /**
-     * Get a JWT via given credentials.
+     * 登录、注册
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -118,14 +113,56 @@ class AuthController extends Controller
         return $response;
     }
 
+
+
     /**
-     * Get the authenticated User.
+     * @api {POST} /api/me 用户【获取用户信息】
+     * @apiGroup Auth
+     * @apiversion 0.1.0
+     * @apiDescription
+     * --------------------------------------
+     * Author:zhangjinyu
+     *
+     * Date:2019/02/26 19:09
+     *
+     * Email:363626256@qq.com
+     * --------------------------------------
+     *
+     *
+     * @apiHeaderExample {x-www-form-urlncode} Header-Example: 请求头部示例：
+     * Content-Type: application/json
+     * charset=utf-8
+     * Authorization: Bearer anEisUMtAbGEbKvlxmNNPliECaph6r7FMAZQpVbv
+     *
+     * @apiSuccess (返回字段:) {String} status 状态
+     * @apiSuccess (返回字段:) {Integer} code  状态码
+     * @apiSuccess (返回字段:) {Object} data  code为200时返回的数据包
+     * @apiSuccess (返回字段:) {Integer} user_id  用户id
+     * @apiSuccess (返回字段:) {Integer} status  0：注销；1：正常
+     *
+     * @apiSuccessExample 成功时返回的数据:
+     *  HTTP/1.1 200 Success
+     *{
+     *  "status": true,
+     *  "code": 200,
+     *  "message": "SUCCESS",
+     *  "data": {
+     *      "id": 14,
+     *      "user_id": 1,
+     *      "account": "zhangjinyu666661",
+     *      "type": 1,
+     *      "status": 1
+     *  }
+     *}
+     **/
+    /**
+     * 根据token获取用户信息
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function me()
     {
-        return $this->success($this->userInfo());
+        return $this->success(200, $this->userInfo());
     }
 
     /**
