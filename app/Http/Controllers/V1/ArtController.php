@@ -94,8 +94,6 @@ class ArtController extends Controller
      */
     public function store(StoreArtRequest $request)
     {
-         dd('art.store');
-
         
         try {
             $result = $this->artService->create($request->all());
