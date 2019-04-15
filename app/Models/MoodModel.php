@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ArtInfoModel extends Model
+class ArtModel extends Model
 {
     //
-    protected $table = 'art_info';
+    protected $table = 'mood';
 }
