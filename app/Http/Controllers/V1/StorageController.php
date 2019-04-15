@@ -9,7 +9,7 @@ class StorageController extends Controller
 {
 
     /**
-     * @api {POST} /storage/imageUpload 文件【图片上传】
+     * @api {POST} api/v1/storage/imageUpload 文件【图片上传】
      * @apiGroup Storage
      * @apiversion 0.1.0
      * @apiDescription

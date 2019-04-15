@@ -25,7 +25,7 @@ class ArtController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
         //
 
@@ -94,7 +94,7 @@ class ArtController extends Controller
      */
     public function store(StoreArtRequest $request)
     {
-        // dd('art.store');
+         dd('art.store');
 
         
         try {
@@ -113,11 +113,6 @@ class ArtController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
-        //
-        dd('art.create');
-    }
 
     /**
      * Display the specified resource.
@@ -131,17 +126,6 @@ class ArtController extends Controller
         dd('art.show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-        dd('art.edit');
-    }
 
     /**
      * Update the specified resource in storage.
