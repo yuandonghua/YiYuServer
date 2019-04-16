@@ -17,7 +17,7 @@
 Route::group([], function () {
     //Route::get('index', 'IndexController@Index');
     Route::resource('art', 'ArtController');
-
+    Route::get('classify/list', 'ClassifyController@classifyList');
 });
 
 
@@ -26,4 +26,5 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     //Route::get('index', 'IndexController@Index');
     
     Route::post('storage/imageUpload', 'StorageController@imageUpload');
+    Route::get('userClassify/classifyInfo', 'UserClassifyController@getUserClassifyInfo');
 });

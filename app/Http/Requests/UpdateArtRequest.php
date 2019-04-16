@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreArtRequest extends FormRequest
+class UpdateArtRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,6 +34,7 @@ class StoreArtRequest extends FormRequest
             'shape' => 'required|integer',
             'main_image' => 'required|string',
             'art_info_model' => 'required|array',
+            'art_info_model.id' => 'required|integer',
             'art_info_model.author' => 'required|string',
             'art_info_model.image_info' => 'required|string',
             'art_info_model.create_year' => 'required|string',
@@ -69,6 +70,8 @@ class StoreArtRequest extends FormRequest
             'main_image.string' => '必须为字符串',
             'art_info_model.required' => '作品信息不允许为空',
             'art_info_model.array' => '作品信息必须是数组',
+            'art_info_model.id.required' => '作品详细信息主键不允许为空',
+            'art_info_model.id.integer' => '作品详细信息主键必须是主键',
             'art_info_model.author.required' => '作者不允许为空',
             'art_info_model.author.string' => '作者必须是字符串',
             'art_info_model.image_info.required' => '图片不允许为空',
