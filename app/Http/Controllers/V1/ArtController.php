@@ -36,7 +36,7 @@ class ArtController extends Controller
 
 
     /**
-     * @api {POST} /art 作品【创建】
+     * @api {POST} /api/v1/art 作品【创建】
      * @apiGroup Art
      * @apiversion 0.1.0
      * @apiDescription
@@ -144,7 +144,7 @@ class ArtController extends Controller
 
     
     /**
-     * @api {GET} /art/$id 作品【获取单条记录】
+     * @api {GET} /api/v1/art/$id 作品【获取单条记录】
      * @apiGroup Art
      * @apiversion 0.1.0
      * @apiDescription
@@ -227,7 +227,7 @@ class ArtController extends Controller
 
 
     /**
-     * @api {PUT} /art/$id 作品【修改】
+     * @api {PUT} /api/v1/art/$id 作品【修改】
      * @apiGroup Art
      * @apiversion 0.1.0
      * @apiDescription
@@ -342,7 +342,7 @@ class ArtController extends Controller
 
 
     /**
-     * @api {DELETE} /art/$id 作品【删除】
+     * @api {DELETE} /api/v1/art/$id 作品【删除】
      * @apiGroup Art
      * @apiversion 0.1.0
      * @apiDescription

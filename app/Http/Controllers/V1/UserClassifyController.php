@@ -14,7 +14,7 @@ class UserClassifyController extends Controller
     }
 
     /**
-     * @api {GET} userClassify/classifyInfo 个人分类【获取用户作品分类列表】
+     * @api {GET} /api/v1/userClassify/classifyInfo 个人分类【获取用户作品分类列表】
      * @apiGroup UserClassify
      * @apiversion 0.1.0
      * @apiDescription
