@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ArtModel extends Model
 {
+    const RECOMMEND = 1;  // 推荐
+    const RECOMMEND_NO = 0; // 不推荐
     /**
      * 表名
      */

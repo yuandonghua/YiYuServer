@@ -68,4 +68,26 @@ class ArtService
         return $artModel;
     }
 
+    public function getArtList($searchWhere)
+    {
+        $artList = ArtModel::leftJoin('user_info', 'arts.pulisher_user_id', '=', 'user_info.user_id')
+            -> leftJoin('classify', 'arts.classify_id', '=', 'classify.id')
+            -> select(['arts.id', 'user_info.photo', 'user_info.nickname', 'user_info.introduce', 'classify.class_name', 'arts.long', 'arts.width', 'arts.height', 'arts.shape', 'arts.main_image', 'arts.title', 'arts.create_year', 'arts.thumb_num', 'arts.comment_num'])
+            -> orderBy('arts.order_num', 'desc');
+
+        if (is_numeric($searchWhere)) {
+            $artList = $artList->where('classify.pid', $searchWhere);
+        } else if($searchWhere = 'recommend') {
+            $artList = $artList->where('arts.recommend', ArtModel::RECOMMEND);
+        } else if($searchWhere = 'follow') {
+            $artId = [];
+
+            $artList = $artList->whereIn('arts.id', $artId);
+        }
+        
+
+        $artList = $artList->get();
+            
+        return $artList;
+    }
 }

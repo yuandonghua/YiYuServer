@@ -19,6 +19,7 @@ Route::group([], function () {
     Route::resource('art', 'ArtController');
     Route::get('classify/list', 'ClassifyController@classifyList');
     Route::get('banner/list', 'BannerController@bannerList');
+    Route::get('artList', 'ArtController@artList');
 });
 
 

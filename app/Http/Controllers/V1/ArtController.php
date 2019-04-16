@@ -20,17 +20,104 @@ class ArtController extends Controller
     }
 
 
-
+    /**
+     * @api {GET} /api/v1/art/list 作品【列表页】
+     * @apiGroup Art
+     * @apiversion 0.1.0
+     * @apiDescription
+     * --------------------------------------
+     * Author:zhangjinyu
+     *
+     * Date:2019/04/17 06:01
+     *
+     * Email:363626256@qq.com
+     * --------------------------------------
+     *
+     * @apiParam (请求参数:) {String} title 标题
+     * @apiParam (请求参数:) {Integer} publisher_user_id 发布人
+     * @apiParam (请求参数:) {Integer} style_classify_id   风格分类id
+     * @apiParam (请求参数:) {Integer} user_classify_id   个人作品集分类id
+     * @apiParam (请求参数:) {Integer} width   宽(mm)
+     * @apiParam (请求参数:) {Integer} height   高(mm)
+     * @apiParam (请求参数:) {Integer} long  长(mm)
+     * @apiParam (请求参数:) {Integer} shape   1:平面;2:立体
+     * @apiParam (请求参数:) {String} main_image   主图地址
+     * @apiParam (请求参数:) {Object} art_info_model 作品信息
+     * @apiParam (请求参数:) {String} art_info_model.author 作者
+     * @apiParam (请求参数:) {String} art_info_model.image_info 作品图片地址（逗号分隔）
+     * @apiParam (请求参数:) {String} art_info_model.create_year 创建时间
+     * @apiParam (请求参数:) {String} art_info_model.introduce 作品介绍
+     *
+     *
+     *
+     * @apiParamExample {json} 请求参数示例：
+     * {
+     *   "title":"标题1911",
+     *   "pulisher_user_id":1,
+     *   "classify_id":1,
+     *   "user_classify_id":1,
+     *   "width":34,
+     *   "height":11,
+     *   "long":23,
+     *   "shape":1,
+     *   "main_image":"www.1111.com",
+     *   "art_info_model":{
+     *     "author":"zhangsan",
+     *     "image_info":"www.111.com11111",
+     *     "create_year":"20191",
+     *     "introduce":"jieshao111111"
+     *   }
+     * }
+     * 
+     * 
+     * @apiHeaderExample {x-www-form-urlncode} Header-Example: 请求头部示例：
+     * Content-Type: application/json
+     * charset=utf-8
+     * Authorization: Bearer anEisUMtAbGEbKvlxmNNPliECaph6r7FMAZQpVbv
+     *
+     * @apiSuccess (返回字段:) {Integer} code 状态码
+     * @apiSuccess (返回字段:) {String} message  提示信息
+     * @apiSuccess (返回字段:) {Object} data  statusCode为200时返回的数据包
+     *
+     * @apiSuccessExample 成功时返回的数据:
+     *  HTTP/1.1 200 Success
+     *  {
+     *      "status": true,
+     *      "code": 200,
+     *      "message": "SUCCESS",
+     *      "data": {
+     *          "id": 19,
+     *          "title": "标题1911",
+     *          "pulisher_user_id": 1,
+     *          "classify_id": 1,
+     *          "user_classify_id": 1,
+     *          "width": 34,
+     *          "height": 11,
+     *          "long": 23,
+     *          "review": 0,
+     *          "shape": 1,
+     *          "main_image": "www.1111.com",
+     *          "art_info_model": {
+     *              "id": 7,
+     *              "art_id": 19,
+     *              "author": "zhangsan",
+     *              "image_info": "www.111.com11111",
+     *              "create_year": "20191",
+     *              "introduce": "jieshao111111"
+     *          }
+     *      }
+     *  }
+     **/
     /**
      * 作品列表
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function artList(Request $request)
     {
-        //
-
-        dd('art.index');
+        $result = $this->artService->getArtList($request->input('searchWhere', 0));
+        
+        return $this->success(200, $result);
     }
 
 

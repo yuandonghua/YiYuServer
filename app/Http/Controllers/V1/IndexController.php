@@ -8,6 +8,6 @@ class IndexController extends Controller
 {
     public function index()
     {
-       
+        dd('7');
     }
 }
