@@ -36,7 +36,7 @@ class StoreArtRequest extends FormRequest
             'art_info_model' => 'required|array',
             'art_info_model.author' => 'required|string',
             'art_info_model.image_info' => 'required|string',
-            'art_info_model.create_year' => 'required|string',
+            'create_year' => 'required|string',
             'art_info_model.introduce' => 'required|string'
         ];
     }
@@ -73,8 +73,8 @@ class StoreArtRequest extends FormRequest
             'art_info_model.author.string' => '作者必须是字符串',
             'art_info_model.image_info.required' => '图片不允许为空',
             'art_info_model.image_info.string' => '图片必须是字符串',
-            'art_info_model.create_year.required' => '创建年份不允许为空',
-            'art_info_model.create_year.string' => '创建年份必须是字符串',
+            'create_year.required' => '创建年份不允许为空',
+            'create_year.string' => '创建年份必须是字符串',
             'art_info_model.introduce.required' => '作品介绍不允许为空',
             'art_info_model.introduce.string' => '作品介绍必须是字符串',
         ];

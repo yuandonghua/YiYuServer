@@ -15,18 +15,47 @@
 
 // 不需要token认证的路由
 Route::group([], function () {
-    //Route::get('index', 'IndexController@Index');
+    // 作品-资源路由
     Route::resource('art', 'ArtController');
+
+    // 作品-分类列表
     Route::get('classify/list', 'ClassifyController@classifyList');
+
+    // 首页-轮播图
     Route::get('banner/list', 'BannerController@bannerList');
+
+    // 作品-展示列表
     Route::get('artList', 'ArtController@artList');
+
+    // 作品-资源路由
+
 });
 
 
 // 需要token认证的路由
-Route::group(['middleware' => ['jwt.auth']], function () {
-    //Route::get('index', 'IndexController@Index');
-    
+Route::group(['middleware' => ['jwt.auth']], function () {  
+    // 上传
     Route::post('storage/imageUpload', 'StorageController@imageUpload');
-    Route::get('userClassify/classifyInfo', 'UserClassifyController@getUserClassifyInfo');
+
+    // 个人分类
+    Route::resource('userClassify', 'UserClassifyController');
+
+    // 收藏作品
+    Route::post('artInfo/artCollect', 'ArtCollectController@artCollect');
+
+    // 收藏作品
+    Route::post('artInfo/deleteArtCollect', 'ArtCollectController@deleteArtCollect');
+
+    // 评论作品
+    Route::post('artInfo/artComment', 'ArtCommentController@artComment');
+
+    // 关注列表or粉丝列表
+    Route::get('follow/follow', 'UserFollowController@followList');
+
+    // 关注用户
+    Route::post('follow/createFollow', 'UserFollowController@createFollow');
+
+
+    // 取消关注用户
+    Route::post('follow/deleteFollow', 'UserFollowController@deleteFollow');
 });
