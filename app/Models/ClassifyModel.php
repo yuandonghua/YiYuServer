@@ -15,7 +15,7 @@ class ClassifyModel extends Model
      * 可批量添加的字段
      */
     protected $fillable = [
-        'user_id', 'class_name' 
+        'user_id', 'class_name'
     ];
 
     /**

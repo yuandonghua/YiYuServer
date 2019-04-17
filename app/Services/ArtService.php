@@ -132,4 +132,30 @@ class ArtService
            
         return $artInfo;
     }
+
+    /**
+     * 作品删除并删除评论、收藏
+     * @param int/string $searchWhere
+     * @return array
+     * @throws \Illuminate\Database\QueryException
+     */
+    public function deleteArt($art)
+    {
+        \DB::beginTransaction();
+        try {
+            if ($art->publisher_user_id == \Auth::user()->id) {        
+                ArtCollectModel::whereArtId($art->id)->delete();
+                ArtCommentModel::whereArtId($art->id)->delete();
+                $art->delete();
+                $art->artInfoModel()->delete();
+            }
+            \DB::commit();
+        } catch (\QueryException $ex) {
+
+            \DB::rollback();
+            throw $ex;
+        }
+        
+        return true;
+    }
 }

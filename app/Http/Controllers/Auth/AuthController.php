@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use APP\Models\LoginModel;
+use App\Services\UserService;
 use App\Http\Controllers\Auth\RegisterController;
 
 class AuthController extends Controller
@@ -81,14 +82,19 @@ class AuthController extends Controller
     {
         $rules = ['account' => 'required', 'type' => 'required'];
         $this->validate($request, $rules);
-        $credentials = $request->only('account', 'type');
+        $credentials = $request->only('account', 'type', 'userinfo');
         
         // 检查是否存在此用户
         $userId = $this->registerController->checkUserExists( $credentials['account'],  $credentials['type']);
 
         // 如果没有此账户就创建并登陆 
         if (!$userId) {
+            $credentials['info']['']
+            $userService = app('App\Services\UserService');
+            $userService->createUser($credentials['info']);
+            $credentials['user_id'] = 
             $user = $this->registerController->register($credentials);
+            
             $token = !$user->id ?: \JWTAuth::fromUser($user);
         }
         // 帐号和密码认证

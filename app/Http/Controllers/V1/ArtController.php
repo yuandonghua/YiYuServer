@@ -506,8 +506,8 @@ class ArtController extends Controller
     {
         
         try {
-            $art->delete();
-            $art->artInfoModel()->delete();
+            $this->artService->deleteArt($art);
+            
         } catch (\QueryException $exc) {
                
             return $this->fail();

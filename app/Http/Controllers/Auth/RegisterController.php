@@ -64,7 +64,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return LoginModel::create([
-            'user_id' => 1,
+            'user_id' => $data['user_id'],
             'type' => $data['type'],
             'account' => $data['account'],
             'password' => bcrypt($data['account']),

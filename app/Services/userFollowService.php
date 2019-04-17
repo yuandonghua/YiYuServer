@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\UserFollowModel;
 use App\Models\UserInfoModel;
 
-class userFollowService
+class UserFollowService
 {
     /**
      * 关注列表or粉丝列表

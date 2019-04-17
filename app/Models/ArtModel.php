@@ -34,4 +34,9 @@ class ArtModel extends Model
     {
         return $this->hasOne('App\Models\ArtInfoModel', 'art_id', 'id');
     }
+
+    public function scopeWhereUserClassify($query, $userClassifyId)
+    {
+        return $query->where('user_classify_id', $userClassifyId);
+    }
 }
