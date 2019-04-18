@@ -38,7 +38,7 @@ class ArtCollectService
         \DB::beginTransaction();
         try {
 
-            $artCollect = ArtCollectModel::updateOrCreate(['art_id' => $artId, 'user_id' => \Auth::user()->id], ['status' => ArtCollectModel::STATUS_COLLECT]);
+            $artCollect = ArtCollectModel::updateOrCreate(['art_id' => $artId, 'user_id' => \Auth::user()->user_id], ['status' => ArtCollectModel::STATUS_COLLECT]);
             $art->increment('collect_num', 1);
 
             \DB::commit();
@@ -64,7 +64,7 @@ class ArtCollectService
 
         \DB::beginTransaction();
         try {
-            ArtCollectModel::whereArtId($artId)->whereUserId(\Auth::user()->id)->update(['status' => ArtCollectModel::STATUS_COLLECT_NO]);
+            ArtCollectModel::whereArtId($artId)->whereUserId(\Auth::user()->user_id)->update(['status' => ArtCollectModel::STATUS_COLLECT_NO]);
             $art->decrement('collect_num', 1);
 
             \DB::commit();

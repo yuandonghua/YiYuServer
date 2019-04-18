@@ -17,7 +17,7 @@ class ArtCommentService
      */
     public function createComment($createCommentRequest)
     {
-        $createCommentRequest->merge(['user_id' => \Auth::user()->id]);
+        $createCommentRequest->merge(['user_id' => \Auth::user()->user_id]);
         $commentData = $createCommentRequest->all();
 
         $artComment = new ArtCommentModel($commentData);      

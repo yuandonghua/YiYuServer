@@ -18,9 +18,9 @@ class UserFollowService
         
         $userList = UserFollowModel::orderBy('user_follow.created_at');
         if ($follow == 'follow') {
-            $userList = $userList->join('user_info', 'user_info.user_id', '=', 'user_follow.user_id')->where('user_follow.user_id', \Auth::user()->id);
+            $userList = $userList->join('user_info', 'user_info.user_id', '=', 'user_follow.user_id')->where('user_follow.user_id', \Auth::user()->user_id);
         } else {
-            $userList = $userList->join('user_info', 'user_info.user_id', '=', 'user_follow.follow_user_id')->where('user_follow.follow_user_id', \Auth::user()->id);
+            $userList = $userList->join('user_info', 'user_info.user_id', '=', 'user_follow.follow_user_id')->where('user_follow.follow_user_id', \Auth::user()->user_id);
         }
 
         $userList = $userList->select(['user_info.user_id', 'user_info.photo', 'user_info.nickname'])->get();
@@ -37,7 +37,7 @@ class UserFollowService
      */
     public function createUserFollow($userId)
     {
-        $selfUserId = \Auth::user()->id;
+        $selfUserId = \Auth::user()->user_id;
         $userInfo = UserInfoModel::whereUserId($userId)->first();
         $selfUserInfo = UserInfoModel::whereUserId($selfUserId)->first();
         \DB::beginTransaction();
@@ -66,7 +66,7 @@ class UserFollowService
      */
     public function deleteUserFollow($userId)
     {
-        $selfUserId = \Auth::user()->id;
+        $selfUserId = \Auth::user()->user_id;
         
         $selfUserInfo = UserInfoModel::whereUserId($selfUserId)->first();
         $userInfo = UserInfoModel::whereUserId($userId)->first();

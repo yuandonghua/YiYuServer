@@ -12,6 +12,8 @@ class LoginModel extends Authenticatable implements JWTSubject
 
     const STATUS_NORMAL = 1; // 登录状态：正常
     const STATUS_CANCEL = 0; // 登录状态：注销
+    const TYPE_WECHAT = 3; // 登录类型：微信
+    const TYPE_QQ = 2; // 登录类型：qq
 
     protected $table = 'login';
 

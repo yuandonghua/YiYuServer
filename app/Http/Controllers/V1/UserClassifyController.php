@@ -72,7 +72,7 @@ class UserClassifyController extends Controller
      **/    
     public function index(Request $request)
     {
-        $userId = $request->intpu('user_id', \Auth::user()->id);
+        $userId = $request->intpu('user_id', \Auth::user()->user_id);
         $result = $this->userClassifyService->getUserClassifyInfoByUserId($userId);
 
         return $this->success(200, $result);

@@ -17,7 +17,7 @@ class AuthController extends Controller
      * 
      * @return void
      */
-    public function __construct(RegisterController $registerController)
+    public function __construct(RegisterController $registerController, UserService $userService)
     {
         // 这里额外注意了：官方文档样例中只除外了『login』
         // 这样的结果是，token 只能在有效期以内进行刷新，过期无法刷新
@@ -27,6 +27,7 @@ class AuthController extends Controller
         // 但是我推荐用 『jwt.auth』，效果是一样的，但是有更加丰富的报错信息返回
         $this->middleware('jwt.auth', ['except' => ['login']]);
         $this->registerController = $registerController;
+        $this->userService = $userService;
     }
 
 
@@ -43,9 +44,19 @@ class AuthController extends Controller
      *
      * Email:363626256@qq.com
      * --------------------------------------
-     *
      * @apiParam (请求参数:) {String} account OpenID
      * @apiParam (请求参数:) {Integer} type   2:QQ;3:微信
+     * @apiParam (请求参数:) {String} nickname 昵称
+     * @apiParam (请求参数:) {Integer} sex 男1；女2；未知0
+     * @apiParam (请求参数:) {String} photo 头像地址
+     * 
+     * {
+     *     "account":"zhangjinyu3",
+     *     "type":3,
+     *     "nickname":"提将",
+     *     "sex":1,
+     *     "photo":"https://yy363626256-1258529412.cos.ap-beijing.myqcloud.com/image/o1pUkbbNmB7bhDAAk4MT6rTVZb6bybHiNW5KY86R.jpeg"
+     * }
      *
      * @apiHeaderExample {x-www-form-urlncode} Header-Example: 请求头部示例：
      * Content-Type: application/json
@@ -57,21 +68,36 @@ class AuthController extends Controller
      * @apiSuccess (返回字段:) {Object} data  code为200时返回的数据包
      * @apiSuccess (返回字段:) {Integer} user_id  用户id
      * @apiSuccess (返回字段:) {Integer} status  0：注销；1：正常
+     * @apiSuccess (返回字段:) {Integer} type  2:QQ;3:微信
+     * @apiSuccess (返回字段:) {String} nickname  昵称
+     * @apiSuccess (返回字段:) {String} photo  头像地址
+     * @apiSuccess (返回字段:) {Integer} fans  粉丝数量
+     * @apiSuccess (返回字段:) {Integer} star  关注数量
+     * @apiSuccess (返回字段:) {Integer} sex  性别
+     * @apiSuccess (返回字段:) {String} introduce  个人介绍
+     * @apiSuccess (返回字段:) {Integer} art_beat  艺豆
      *
      * @apiSuccessExample 成功时返回的数据:
      *  HTTP/1.1 200 Success
-     *{
-     *  "status": true,
-     *  "code": 200,
-     *  "message": "SUCCESS",
-     *  "data": {
-     *      "id": 14,
-     *      "user_id": 1,
-     *      "account": "zhangjinyu666661",
-     *      "type": 1,
-     *      "status": 1
+     *  {
+     *      "status": true,
+     *      "code": 200,
+     *      "message": "SUCCESS",
+     *      "data": {
+     *          "id": 7,
+     *          "user_id": 20,
+     *          "account": "zhangjinyu3",
+     *          "type": 1,
+     *          "status": 1,
+     *          "nickname": "提将",
+     *          "photo": "https://yy363626256-1258529412.cos.ap-beijing.myqcloud.com/image/o1pUkbbNmB7bhDAAk4MT6rTVZb6bybHiNW5KY86R.jpeg",
+     *          "fans": 0,
+     *          "star": 0,
+     *          "sex": 1,
+     *          "introduce": "",
+     *          "art_beat": 0
+     *      }
      *  }
-     *}
      **/
     /**
      * 登录、注册
@@ -80,19 +106,22 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $rules = ['account' => 'required', 'type' => 'required'];
+        $rules = [
+            'account' => 'required|string', 
+            'type' => 'required|integer', 
+            'sex' => 'required|integer',
+            'nickname' => 'required|string',
+            'photo' => 'required|string',
+            ];
         $this->validate($request, $rules);
-        $credentials = $request->only('account', 'type', 'userinfo');
+        $credentials = $request->only('account', 'type', 'nickname', 'sex', 'photo');
         
         // 检查是否存在此用户
-        $userId = $this->registerController->checkUserExists( $credentials['account'],  $credentials['type']);
+        $userId = $this->registerController->checkUserExists($credentials['account'],  $credentials['type']);
 
         // 如果没有此账户就创建并登陆 
-        if (!$userId) {
-            $credentials['info']['']
-            $userService = app('App\Services\UserService');
-            $userService->createUser($credentials['info']);
-            $credentials['user_id'] = 
+        if (!$userId) { 
+            $credentials['user_id'] = $this->userService->createUser($credentials);
             $user = $this->registerController->register($credentials);
             
             $token = !$user->id ?: \JWTAuth::fromUser($user);
@@ -104,14 +133,14 @@ class AuthController extends Controller
         }
 
         $userInfo = $this->userInfo();
-        
+
         // 用户状态的确认
-        if ($userInfo->status !== LoginModel::STATUS_NORMAL) {
+        if ($userInfo['status'] !== LoginModel::STATUS_NORMAL) {
 
             return $this->fail(4002);
         }
 
-        $response = $this->success(200, $this->userInfo());
+        $response = $this->success(200, $userInfo);
         // 把token添加到响应头中
         $response->headers->set('Authorization', 'Bearer ' . $token);
         $response->headers->set('Access-Control-Expose-Headers', 'Authorization');
@@ -145,21 +174,36 @@ class AuthController extends Controller
      * @apiSuccess (返回字段:) {Object} data  code为200时返回的数据包
      * @apiSuccess (返回字段:) {Integer} user_id  用户id
      * @apiSuccess (返回字段:) {Integer} status  0：注销；1：正常
+     * @apiSuccess (返回字段:) {Integer} type  2:QQ;3:微信
+     * @apiSuccess (返回字段:) {String} nickname  昵称
+     * @apiSuccess (返回字段:) {String} photo  头像地址
+     * @apiSuccess (返回字段:) {Integer} fans  粉丝数量
+     * @apiSuccess (返回字段:) {Integer} star  关注数量
+     * @apiSuccess (返回字段:) {Integer} sex  性别
+     * @apiSuccess (返回字段:) {String} introduce  个人介绍
+     * @apiSuccess (返回字段:) {Integer} art_beat  艺豆
      *
      * @apiSuccessExample 成功时返回的数据:
      *  HTTP/1.1 200 Success
-     *{
-     *  "status": true,
-     *  "code": 200,
-     *  "message": "SUCCESS",
-     *  "data": {
-     *      "id": 14,
-     *      "user_id": 1,
-     *      "account": "zhangjinyu666661",
-     *      "type": 1,
-     *      "status": 1
+     *  {
+     *      "status": true,
+     *      "code": 200,
+     *      "message": "SUCCESS",
+     *      "data": {
+     *          "id": 7,
+     *          "user_id": 20,
+     *          "account": "zhangjinyu3",
+     *          "type": 1,
+     *          "status": 1,
+     *          "nickname": "提将",
+     *          "photo": "https://yy363626256-1258529412.cos.ap-beijing.myqcloud.com/image/o1pUkbbNmB7bhDAAk4MT6rTVZb6bybHiNW5KY86R.jpeg",
+     *          "fans": 0,
+     *          "star": 0,
+     *          "sex": 1,
+     *          "introduce": "",
+     *          "art_beat": 0
+     *      }
      *  }
-     *}
      **/
     /**
      * 根据token获取用户信息
@@ -172,7 +216,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token).
+     * 退出登录
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -195,19 +239,15 @@ class AuthController extends Controller
     }
 
 
+    /**
+     * 获取用户信息
+     * @para 
+     * @return \Illuminate\Http\JsonResponse
+     */
     private function userInfo()
     {
-        return \Auth::user();
+        return array_merge(\Auth::user()->toArray(), $this->userService->getUserInfo(\Auth::user()->user_id));
     }
 
-    private function register(array $data)
-    {
 
-        return LoginModel::create([
-            'user_id' => 1,
-            'type' => $data['type'],
-            'account' => $data['account'],
-            'password' => bcrypt($data['account']),
-        ]);
-    }
 }

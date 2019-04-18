@@ -27,8 +27,8 @@ Route::group([], function () {
     // 作品-展示列表
     Route::get('artList', 'ArtController@artList');
 
-    // 作品-资源路由
-
+    // 作品-个人分类下作品列表
+    Route::get('userClassify/artList', 'ArtController@userClassifyArtList');
 });
 
 
@@ -58,4 +58,9 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
     // 取消关注用户
     Route::post('follow/deleteFollow', 'UserFollowController@deleteFollow');
+    
+    // 用户信息修改
+    Route::put('user/userInfo', 'UserController@updateUserInfo');
+
+
 });

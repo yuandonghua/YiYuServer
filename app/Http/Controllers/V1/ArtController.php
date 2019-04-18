@@ -471,7 +471,7 @@ class ArtController extends Controller
      * --------------------------------------
      * Author:zhangjinyu
      *
-     * Date:2019/04/16 13:47
+     * Date:2019/04/18 15:37
      *
      * Email:363626256@qq.com
      * --------------------------------------
@@ -502,8 +502,8 @@ class ArtController extends Controller
      * @param  app\Models\ArtModel  $art
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ArtModel $art)
-    {
+     public function destroy(ArtModel $art)
+     {
         
         try {
             $this->artService->deleteArt($art);
@@ -514,5 +514,90 @@ class ArtController extends Controller
         }
         
         return $this->success(200);
-    }
+     }
+
+
+    /**
+     * @api {GET} /api/v1/userClassify/artList 作品【分类作品列表展示】
+     * @apiGroup Art
+     * @apiversion 0.1.0
+     * @apiDescription
+     * --------------------------------------
+     * Author:zhangjinyu
+     *
+     * Date:2019/04/18 13:47
+     *
+     * Email:363626256@qq.com
+     * --------------------------------------
+     *
+     * @apiParam (请求参数:) {String} user_classify_id 分类id
+     *
+     * @apiParamExample {json} 请求参数示例：
+     * {
+     *   "user_classify_id":1
+     * }
+     * 
+     * @apiHeaderExample {x-www-form-urlncode} Header-Example: 请求头部示例：
+     * Content-Type: application/json
+     * charset=utf-8
+     * Authorization: Bearer anEisUMtAbGEbKvlxmNNPliECaph6r7FMAZQpVbv
+     *
+     * @apiSuccess (返回字段:) {Integer} code 状态码
+     * @apiSuccess (返回字段:) {String} message  提示信息
+     * @apiSuccess (返回字段:) {Object} data  statusCode为200时返回的数据包
+     * @apiSuccess (返回字段:) {Integer} data.id  主键id
+     * @apiSuccess (返回字段:) {String} data.class_name  分类名称
+     * @apiSuccess (返回字段:) {Integer} data.long  长度
+     * @apiSuccess (返回字段:) {Integer} data.width  宽度
+     * @apiSuccess (返回字段:) {Integer} data.height  高度
+     * @apiSuccess (返回字段:) {Integer} data.shape  类型：1平面；2立体
+     * @apiSuccess (返回字段:) {String} data.title  标题
+     * @apiSuccess (返回字段:) {String} data.create_year  创建年份
+     *
+     *
+     *
+     * @apiSuccessExample 成功时返回的数据:
+     *  HTTP/1.1 200 Success
+     *  {
+     *      "status": true,
+     *      "code": 200,
+     *      "message": "SUCCESS",
+     *      "data": [
+     *          {
+     *              "id": 14,
+     *              "class_name": "吴门画派",
+     *              "long": 23,
+     *              "width": 34,
+     *              "height": 11,
+     *              "shape": 1,
+     *              "main_image": "www.1111.com",
+     *              "title": "标题1",
+     *              "create_year": "2018"
+     *          },
+     *          {
+     *              "id": 15,
+     *              "class_name": "吴门画派",
+     *              "long": 23,
+     *              "width": 34,
+     *              "height": 11,
+     *              "shape": 1,
+     *              "main_image": "www.1111.com",
+     *              "title": "标题1",
+     *              "create_year": "2018"
+     *          }
+     *      ]
+     *  }
+     **/    
+    /**
+     * 作品
+     *
+     * @param  request  $request
+     * @return \Illuminate\Http\Response
+     */
+     public function userClassifyArtList(Request $request)
+     {
+          $result = $this->artService->classifyArtList($request->input('user_classify_id'));
+
+          return $this->success(200, $result);
+     }
 }

@@ -32,7 +32,7 @@ class UserClassifyService
      */
     public function createUserClassify(Array $createUserClassifyData) 
     {
-        $createUserClassifyData['user_id'] = \Auth::user()->id;
+        $createUserClassifyData['user_id'] = \Auth::user()->user_id;
         try {
             $userClassify = new UserClassifyModel($createUserClassifyData);
             $userClassify->save();
@@ -57,7 +57,7 @@ class UserClassifyService
         try {
 
             $userClassify = UserClassifyModel::find($userClassifyId);    
-            if ($userClassify->user_id == \Auth::user()->id) {
+            if ($userClassify->user_id == \Auth::user()->user_id) {
 
                 $deleteArtIdArray = ArtModel::whereUserClassify($userClassifyId)->pluck('id')->toArray();
                 if ($deleteArtIdArray) {
@@ -91,7 +91,7 @@ class UserClassifyService
         isset($updateUserClassifyData['image_url']) ? $userClassify->class_name =  $updateUserClassifyData['image_url'] : '' ;     
         
         try {
-            if (\Auth::user()->id == $userClassify->user_id) {
+            if (\Auth::user()->user_id == $userClassify->user_id) {
                 $userClassify->save();
             } 
             

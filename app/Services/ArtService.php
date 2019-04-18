@@ -99,8 +99,8 @@ class ArtService
             $artList = $artList->where('arts.recommend', ArtModel::RECOMMEND);
 
         // 如果是follow显示关注列表
-        } else if($searchWhere == 'follow' && \Auth::user()->id) {
-            $userId = \Auth::user()->id;
+        } else if($searchWhere == 'follow' && \Auth::user()->user_id) {
+            $userId = \Auth::user()->user_id;
             //用户关注列表
             $artIdArray = ArtFollowModel::whereUserId($userId)->pluck('art_id')->toArray(); // 
             
@@ -143,7 +143,7 @@ class ArtService
     {
         \DB::beginTransaction();
         try {
-            if ($art->publisher_user_id == \Auth::user()->id) {        
+            if ($art->publisher_user_id == \Auth::user()->user_id) {        
                 ArtCollectModel::whereArtId($art->id)->delete();
                 ArtCommentModel::whereArtId($art->id)->delete();
                 $art->delete();
@@ -158,4 +158,22 @@ class ArtService
         
         return true;
     }
+
+    /**
+     * 获取分类下作品列表
+     * @param int $classifyId
+     * @return array
+     * @throws \Illuminate\Database\QueryException
+     */
+    public function classifyArtList($userClassifyId)
+    {
+        $artList = ArtModel::Join('classify', 'arts.classify_id', '=', 'classify.id')
+            -> Join('art_info', 'arts.id', '=', 'art_info.art_id')
+            -> where('user_classify_id', $userClassifyId)
+            -> select(['arts.id', 'classify.class_name', 'arts.long', 'arts.width', 'arts.height', 'arts.shape', 'arts.main_image', 'arts.title', 'arts.create_year'])
+            -> get();
+
+        return $artList;
+    }
+
 }
