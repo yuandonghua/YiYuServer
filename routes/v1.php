@@ -29,6 +29,11 @@ Route::group([], function () {
 
     // 作品-个人分类下作品列表
     Route::get('userClassify/artList', 'ArtController@userClassifyArtList');
+
+    // 动态-点赞列表
+    Route::get('moodThumb/list', 'MoodThumbController@moodThumbList');
+
+    
 });
 
 
@@ -43,7 +48,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     // 收藏作品
     Route::post('artInfo/artCollect', 'ArtCollectController@artCollect');
 
-    // 收藏作品
+    // 取消收藏作品
     Route::post('artInfo/deleteArtCollect', 'ArtCollectController@deleteArtCollect');
 
     // 评论作品
@@ -62,5 +67,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     // 用户信息修改
     Route::put('user/userInfo', 'UserController@updateUserInfo');
 
+    // 动态-资源路由
+    Route::resource('mood', 'MoodController');
+
+    // 动态-点赞资源路由
+    Route::resource('moodThumb', 'MoodThumbController');
+
+    // 动态-评论资源路由
+    Route::resource('moodComment', 'MoodCommentController');
 
 });
