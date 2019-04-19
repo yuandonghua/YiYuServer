@@ -22,6 +22,6 @@ class MoodModel extends Model
      * 隐藏的字段
      */
     protected $hidden = [
-        'updated_at', 'created_at'
+        'updated_at'
     ];
 }

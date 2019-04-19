@@ -77,4 +77,20 @@ class ArtCollectService
         return [];
     }
 
+    /**
+     * 收藏作品-收藏作品列表
+     * @param  
+     * @return array
+     * @throws \Illuminate\Database\QueryException
+     */
+    public function getArtCollectList()
+    {
+        $userId = \Auth::user()->user_id;
+        $artIdArray = ArtCollectModel::whereUserId($userId)->orderBy('updated_at')->pluck('art_id')->toArray();
+        return ArtModel::Join('classify', 'arts.classify_id', '=', 'classify.id')
+            -> Join('art_info', 'arts.id', '=', 'art_info.art_id')
+            -> whereIn('arts.id', $artIdArray)
+            -> select(['arts.id', 'classify.class_name', 'arts.long', 'arts.width', 'arts.height', 'arts.shape', 'arts.main_image', 'arts.title', 'arts.create_year'])
+            -> get();
+    }
 }

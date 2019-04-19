@@ -76,4 +76,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     // 动态-评论资源路由
     Route::resource('moodComment', 'MoodCommentController');
 
+    // 动态-我的动态列表
+    Route::get('moodList', 'MoodController@moodList');
+
+
+    // 动态-我的收藏-作品列表
+    Route::get('artInfo/artCollectList', 'ArtCollectController@artCollectList');
 });

@@ -118,4 +118,68 @@ class ArtCollectController extends Controller
         
         return $this->success(200);
     }
+
+    /**
+     * @api {GET} /api/v1/artInfo/artCollectList 作品【收藏-收藏列表】
+     * @apiGroup Art
+     * @apiversion 0.1.0
+     * @apiDescription
+     * --------------------------------------
+     * Author:zhangjinyu
+     *
+     * Date:2019/04/19 12:41
+     *
+     * Email:363626256@qq.com
+     * --------------------------------------
+     * 
+     * 
+     * @apiHeaderExample {x-www-form-urlncode} Header-Example: 请求头部示例：
+     * Content-Type: application/json
+     * charset=utf-8
+     * Authorization: Bearer anEisUMtAbGEbKvlxmNNPliECaph6r7FMAZQpVbv
+     *
+     * @apiSuccess (返回字段:) {Integer} code 状态码
+     * @apiSuccess (返回字段:) {String} message  提示信息
+     * @apiSuccess (返回字段:) {Object} data  statusCode为200时返回的数据包
+     * @apiSuccess (返回字段:) {Integer} data.id  作品id
+     * @apiSuccess (返回字段:) {String} data.class_name  分类名称
+     * @apiSuccess (返回字段:) {Integer} data.long   作品长度
+     * @apiSuccess (返回字段:) {Integer} data.width  作品宽度
+     * @apiSuccess (返回字段:) {Integer} data.height   作品高度
+     * @apiSuccess (返回字段:) {Integer} data.shape  作品形状：1平面；2立体
+     * @apiSuccess (返回字段:) {String} data.create_year  作品创建年份
+     * @apiSuccess (返回字段:) {String} data.main_image  作品主图地址
+     * @apiSuccessExample 成功时返回的数据:
+     *  HTTP/1.1 200 Success
+     *  {
+     *      "status": true,
+     *      "code": 200,
+     *      "message": "SUCCESS",
+     *      "data": [
+     *          {
+     *              "id": 19,
+     *              "class_name": "长安画派",
+     *              "long": 23,
+     *              "width": 34,
+     *              "height": 11,
+     *              "shape": 1,
+     *              "main_image": "www.1111.com",
+     *              "title": "标题1911",
+     *              "create_year": "2018"
+     *          }
+     *      ]
+     *  }
+     **/    
+    /**
+     * 作品收藏-收藏列表
+     *
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function artCollectList()
+    {
+        $result = $this->artCollectService->getArtCollectList();
+
+        return $this->success(200, $result);
+    }
 }

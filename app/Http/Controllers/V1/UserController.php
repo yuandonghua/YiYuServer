@@ -29,11 +29,13 @@ class UserController extends Controller
      * @apiParam (请求参数:) {String} nickname 昵称
      * @apiParam (请求参数:) {Integer} sex 男1；女2；未知0
      * @apiParam (请求参数:) {String} photo 头像地址
+     * @apiParam (请求参数:) {String} introduce 用户简介
      * 
      * {
      *     "nickname":"提将",
      *     "sex":1,
-     *     "photo":"https://yy363626256-1258529412.cos.ap-beijing.myqcloud.com/image/o1pUkbbNmB7bhDAAk4MT6rTVZb6bybHiNW5KY86R.jpeg"
+     *     "photo":"https://yy363626256-1258529412.cos.ap-beijing.myqcloud.com/image/o1pUkbbNmB7bhDAAk4MT6rTVZb6bybHiNW5KY86R.jpeg",
+     *     "introduce":"个人介绍"
      * }
      *
      * @apiHeaderExample {x-www-form-urlncode} Header-Example: 请求头部示例：

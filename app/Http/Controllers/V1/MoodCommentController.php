@@ -76,7 +76,7 @@ class MoodCommentController extends Controller
 
     /**
      * @api {DELETE} /api/v1/moodComment/$id 动态【删除评论】
-     * @apiGroup Art
+     * @apiGroup Mood
      * @apiversion 0.1.0
      * @apiDescription
      * --------------------------------------
