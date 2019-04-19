@@ -49,7 +49,8 @@ class AuthController extends Controller
      * @apiParam (请求参数:) {String} nickname 昵称
      * @apiParam (请求参数:) {Integer} sex 男1；女2；未知0
      * @apiParam (请求参数:) {String} photo 头像地址
-     * 
+     *
+     * @apiParamExample {json} 请求参数示例：
      * {
      *     "account":"zhangjinyu3",
      *     "type":3,

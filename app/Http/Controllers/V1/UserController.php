@@ -30,7 +30,8 @@ class UserController extends Controller
      * @apiParam (请求参数:) {Integer} sex 男1；女2；未知0
      * @apiParam (请求参数:) {String} photo 头像地址
      * @apiParam (请求参数:) {String} introduce 用户简介
-     * 
+     *
+     * @apiParamExample {json} 请求参数示例：
      * {
      *     "nickname":"提将",
      *     "sex":1,
