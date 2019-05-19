@@ -26,7 +26,7 @@ class UserClassifyController extends Controller
      *
      * Email:363626256@qq.com
      * --------------------------------------
-     * @apiParam (请求参数:) {String} user_id 用户id（如果不传，访问的是自己的个人分类列表）
+     * @apiParam (请求参数:) {String} user_id 用户id
      *
      * @apiParamExample {json} 请求参数示例：
      * {
