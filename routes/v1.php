@@ -34,7 +34,6 @@ Route::group([], function () {
     Route::get('moodThumb/list', 'MoodThumbController@moodThumbList');
     // 个人分类
     Route::resource('userClassify', 'UserClassifyController');
-    
 });
 
 
@@ -42,9 +41,7 @@ Route::group([], function () {
 Route::group(['middleware' => ['jwt.auth']], function () {  
     // 上传
     Route::post('storage/imageUpload', 'StorageController@imageUpload');
-
     
-
     // 收藏作品
     Route::post('artInfo/artCollect', 'ArtCollectController@artCollect');
 

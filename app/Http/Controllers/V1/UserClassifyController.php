@@ -12,6 +12,7 @@ class UserClassifyController extends Controller
     public function __construct(UserClassifyService $userClassifyService)
     {
         $this->userClassifyService = $userClassifyService;
+        $this->middleware('jwt.auth', ['except' => ['index']]);
     }
 
     /**
